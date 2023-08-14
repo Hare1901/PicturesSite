@@ -135,5 +135,14 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 # Настройки медиа
+
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Настройки аутентификации
+
+AUTHENTICATION_BACKENDS =[
+    'django.contrib.auth.backends.ModelBackend',
+    # импортируем созданую нами в authentication.py аутентификацйию по email
+    'account.authentication.EmailAuthBackend'
+]
