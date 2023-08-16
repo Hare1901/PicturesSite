@@ -21,6 +21,12 @@ class UserRegistrationForm(forms.ModelForm):
         widget=forms.PasswordInput
     )
 
+    def clean_email(self):
+        data = self.cleaned_data['email']
+        if User.objects.filter(email=data).exist():
+            raise forms.ValidationError('Email already used')
+
+        return data
 
     class Meta:
         model = User
@@ -37,6 +43,17 @@ class UserRegistrationForm(forms.ModelForm):
 
 # для корректировки имени и мэила
 class UserEditForm(forms.ModelForm):
+
+    def clean_email(self):
+
+        data = self.cleaned_data['email']
+        qs = User.objects.exclude(id=self.instance.id).filter(email=data)
+
+        if qs.exists():
+            raise forms.ValidationError('Email already used')
+
+        return data
+
 
     class Meta:
         model = User
