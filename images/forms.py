@@ -4,7 +4,7 @@ from django.utils.text import slugify
 
 import requests
 
-from models import Image
+from .models import Image
 
 
 
